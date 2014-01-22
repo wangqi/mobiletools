@@ -88,7 +88,7 @@ def listreviews(appid, total=100):
 						userstat = getuserprofile(userId, r['name'], reviewUrl)
 						#app_review_list.append(r)
 						print(r['userReviewId'], r['date'], userId, r['name'], r['rating'], r['voteCount'], 
-							r['title'], r['body'], userstat.get('publisher_count'), userstat.get('5star'), sep=',', file=outfile)
+							r['title'], r['body'], userstat.get('publisher_count'), userstat.get('5star'), sep='\t', file=outfile)
 						outfile.flush()
 					except:
 						print("Error to read review from: ", review)
@@ -97,6 +97,8 @@ def listreviews(appid, total=100):
 				print("Error to read the reviews for {}".format(appid))
 			start = i*100+i
 			end = min(total, (i+1)*100+i)
+			if start >= end:
+				break;
 
 #
 # Get the user's rating history
@@ -123,7 +125,7 @@ def getuserprofile(reviewid, name, url):
 					stat['5star'] = stat.get('5star') + 1
 				reviewdate = mainblock.find('div', class_='review-date').text.strip()
 				reviewdate = datetime.strptime(reviewdate, '%d %B %Y').strftime('%Y-%m-%d')
-				print(reviewid, name, gamename, artist, star, reviewdate, sep=',', file=outfile)
+				print(reviewid, name, gamename, star, reviewdate, artist, sep='\t', file=outfile)
 				outfile.flush()
 			except Exception as err:
 				print("Error to get user profile info: ", err)
