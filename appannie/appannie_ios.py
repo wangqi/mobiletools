@@ -21,7 +21,7 @@ headers  = {
     'Accept-Encoding': 'gzip,deflate,sdch'
 }
 
-#
+# vmstat -n 1 30 | gawk '{now=strftime("%Y-%m-%d %T "); print now $0}'> vmstat2.log
 # Login AppAnnie with given user account
 #
 def login(cookie):
